@@ -1,6 +1,8 @@
 package ie.gmit.sw;
 
 import java.awt.*;
+import java.awt.font.*;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.*;
 import java.io.File;
 import java.util.*;
@@ -11,7 +13,7 @@ public class ImageGenerator
 {
 	private Map<String, Integer> map;
 	private int maxWords;
-	private Set<Integer> randomNumbersUsed = new HashSet<Integer>();
+	private RectangleList rectList = new RectangleList();
 	
 	public ImageGenerator(Map<String, Integer> map, int max) throws Exception
 	{
@@ -21,7 +23,7 @@ public class ImageGenerator
 	public void drawImage() throws Exception
 	{
 		BufferedImage image = new BufferedImage(1000, 1000, BufferedImage.TYPE_4BYTE_ABGR);
-		Graphics graphics = image.getGraphics();
+		Graphics2D graphics = (Graphics2D)image.getGraphics();
 		int i = 0;
 		int fontSize = 10;
 		int xpoition = 500;
@@ -29,9 +31,6 @@ public class ImageGenerator
 		
 		for(String word : map.keySet())
 		{  
-			randomNumbersUsed.add(xpoition);
-			randomNumbersUsed.add(yposition);
-			
 			if(map.get(word) <= 1 == false)
 			{
 				i++;
@@ -58,11 +57,17 @@ public class ImageGenerator
 				{
 					graphics.setColor(Color.yellow);
 				}
+				
+				Rectangle2D rect = getBoundaries(graphics, word, xpoition, yposition);
+	
 				do
 				{
-					xpoition = (int)(Math.random()*901);
-				    yposition = (int)(Math.random()*901);
-				}while(!(randomNumbersUsed.contains(xpoition) || randomNumbersUsed.contains(yposition)));
+					xpoition += 10;
+				    yposition -= 10;
+				    
+				}while(rectList.checkOverLap(rect));
+				System.out.println("Here" + " " + i);
+				rectList.add(rect);
 				
 				graphics.setFont(font);
 				graphics.drawString(word, xpoition, yposition);
@@ -75,5 +80,11 @@ public class ImageGenerator
 		}
 		graphics.dispose();
 		ImageIO.write(image, "png", new File("image.png"));
+	}
+	private Rectangle getBoundaries(Graphics2D g, String word, int x, int y)
+	{
+		FontRenderContext frc = g.getFontRenderContext();
+		GlyphVector gv = g.getFont().createGlyphVector(frc, word);
+		return gv.getPixelBounds(null, x, y);
 	}
 }
