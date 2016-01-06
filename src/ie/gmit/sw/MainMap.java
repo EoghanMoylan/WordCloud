@@ -3,15 +3,20 @@ package ie.gmit.sw;
 import java.io.*;
 import java.util.*;
 
-public class MainFileParser implements Parsable
+public class MainMap implements Parsable
 {
 	private Map<String, Integer> wordMap = new HashMap<String, Integer>();
 	private StopwordsList s;
+	private ImageGenerator img;
+	private int maxWords;
 
-	public MainFileParser(String filename, StopwordsList sl) throws Exception
+	public MainMap(String filename, StopwordsList sl, int max) throws Exception
 	{
 		s = sl;	
 		parse(filename);
+		this.maxWords = max;
+		img = new ImageGenerator(getMap(), maxWords);
+		img.drawImage();
 	}
 	public void parse(String filename) throws Exception 
 	{
@@ -33,7 +38,7 @@ public class MainFileParser implements Parsable
 				sb = new StringBuffer();
 				
 				// add words to map if they're not a stop word
-				if (!s.hasWord(word)&& word.length() > 0) 
+				if (!s.hasWord(word)&& word.length() > 1) 
 				{
 					int frequency = 0;
 					if(wordMap.containsKey(word))
@@ -42,10 +47,14 @@ public class MainFileParser implements Parsable
 					}
 					frequency++;
 					wordMap.put(word, frequency);
-					System.out.println(word + " : " + frequency);
+					//System.out.println(word + " : " + frequency);
 				}
 			}
 		}
 		br.close();		
+	}
+	public Map<String, Integer> getMap()
+	{
+		return wordMap;
 	}
 }
