@@ -5,11 +5,11 @@ import java.util.*;
 
 public class RectangleList 
 {
-	private Set<Rectangle2D> rectList; //= new HashSet<Rectangle2D>();
+	private Set<Rectangle2D> rectList;
 	
 	public RectangleList()
 	{
-		this.rectList = new HashSet<Rectangle2D>();
+		rectList = new HashSet<Rectangle2D>();
 	}
 	public void add (Rectangle2D rect)
 	{

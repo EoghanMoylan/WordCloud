@@ -6,7 +6,7 @@ public class Runner
 	{
 		StopwordsList stopWords = new StopwordsList("stopwords.txt");
 		System.out.println("Stopwords parsed...");
-		Parsable toParse = new MainMap("Tolstoy.txt", stopWords, 10);	
+		Parsable toParse = new MainMap("Tolstoy.txt", stopWords, 200);	
 		System.out.println("Done");
 	}
 }

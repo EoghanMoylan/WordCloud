@@ -27,7 +27,24 @@ public class FontHandler
 	}
 	public void setSize(int size)
 	{
+		if(size>72)
+		{
+			size =72;
+		}
+		if(size>120)
+		{
+			size =100;
+		}
+		if(size > 500)
+		{
+			size =200;
+		}
+		if(size>1000)
+		{
+			size =300;
+		}
 		fontSize = (int)(size);
+		
 	}
 	
 	public int getSize()

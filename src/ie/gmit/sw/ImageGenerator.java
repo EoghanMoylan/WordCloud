@@ -16,27 +16,29 @@ public class ImageGenerator
 	private RectangleList rectList;
 	private Graphics2D graphics;
 	private FontHandler fontHandler;
-	private int xposition = 500;
-	private int yposition = 500 ;
+	private int xposition;
+	private int yposition ;
+	private int direction =0;
 	private int i;
+	
 	public ImageGenerator(Map<String, Integer> map, int max) throws Exception
 	{
 		this.maxWords = max;
 		this.map = map;
 		fontHandler = new FontHandler();
 		rectList = new RectangleList();
+		xposition = 1920/2;
+		yposition = 1080/2;
 		i =0;
 	}
 	public void drawImage() throws Exception
 	{
-		BufferedImage image = new BufferedImage(1000, 1000, BufferedImage.TYPE_4BYTE_ABGR);
+		BufferedImage image = new BufferedImage(1920, 1080, BufferedImage.TYPE_4BYTE_ABGR);
 		graphics = (Graphics2D)image.getGraphics();
 		i = 0;
 		
 		for(String word : map.keySet())
-		{  
-			int direction =0;
-			
+		{  			
 			if(direction == 3)
 			{
 				direction = 0;
@@ -70,24 +72,49 @@ public class ImageGenerator
 		switch(direction)
 		{
 			case 0:
-				if(!(yposition + r.getHeight() > 1000))
-					yposition+=3;
+				if(!(r.getY() < 0))
+					xposition-=3;				
+				else
+					resetPosition();
 				break;
 				
 			case 1:
-				if(!(xposition + r.getWidth() > 1000))
-					xposition+=3;
+				if(!(r.getX() + r.getWidth() > 1500))		
+					yposition+=3;				
+				else
+					resetPosition();
 				break;
 				
 			case 2:
-				if(!(yposition - r.getHeight() < 0))
-					yposition-=3;
+				if(!(r.getY() + r.getHeight() > 750))		
+					xposition+=3;				
+				else
+					resetPosition();
 				break;
 				
 			case 3:
-				if(!(xposition - r.getWidth() < 0))
-					xposition-=3;
-				break;			
+				if(!(r.getX() < 0))				
+					yposition-=3;				
+				else
+					resetPosition();
+				break;	
+		}	
+	}
+	private void resetPosition()
+	{
+		xposition = 1920/2;
+		yposition = 1080/2;
+		changeDirection();
+	}
+	private void changeDirection()
+	{
+		if(direction == 3)
+		{
+			direction = 0;
+		}		
+		else
+		{
+			direction++;
 		}
 	}
 	private Rectangle getBoundaries(Graphics2D g, String word, int x, int y)
@@ -97,8 +124,7 @@ public class ImageGenerator
 		return gv.getPixelBounds(null, x, y);
 	}
 	private void drawWord(Font font, Color color, String word, int direction)
-	{
-		
+	{	
 		Rectangle2D rect ;
 		
 		graphics.setFont(font);
