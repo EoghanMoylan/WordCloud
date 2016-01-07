@@ -22,6 +22,7 @@ public class RectangleList
 	public boolean checkOverLap(Rectangle2D rect)
 	{
 		boolean overlapping = false;
+		
 		for(Rectangle2D rectOne : rectList)
 		{
 			overlapping = (rectOne.intersects(rect));
@@ -31,6 +32,7 @@ public class RectangleList
 				break;
 			}
 		}
+		//System.out.println(overlapping);
 		return overlapping; 
 	}
 }

@@ -15,7 +15,9 @@ public class MainMap implements Parsable
 		s = sl;	
 		parse(filename);
 		this.maxWords = max;
+		System.out.println("Main Map finished...");
 		img = new ImageGenerator(getMap(), maxWords);
+		System.out.println("Drawing Image...");
 		img.drawImage();
 	}
 	public void parse(String filename) throws Exception 
