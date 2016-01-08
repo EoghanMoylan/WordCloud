@@ -3,7 +3,7 @@ package ie.gmit.sw;
 import java.io.*;
 import java.util.*;
 
-public class StopwordsList  implements Parsable
+public class StopwordsList extends StopWordsSuper
 {
 	private HashSet<String> stopWordsSet;
 	

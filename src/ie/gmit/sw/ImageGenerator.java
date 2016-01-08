@@ -50,8 +50,6 @@ public class ImageGenerator
 			if(map.get(word) <= 1 == false)
 			{
 				
-				System.out.println(map.get(word));
-				
 				fontHandler.setSize(map.get(word) + 15);
 				fontHandler.setFont();
 				fontHandler.setColour();

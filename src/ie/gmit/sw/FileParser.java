@@ -50,7 +50,7 @@ public class FileParser implements Parsable
 		}
 		br.close();		
 	}
-	public Map<String,Integer> returnMap()
+	public Map<String,Integer> getMap()
 	{
 		return wordMap;
 	}

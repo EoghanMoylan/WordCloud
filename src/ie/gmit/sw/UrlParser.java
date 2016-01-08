@@ -49,7 +49,6 @@ public class UrlParser implements Parsable
 				}
 			}
 		}
-		System.out.println(wordMap);
 		in.close();			
 		
 	}
@@ -57,5 +56,4 @@ public class UrlParser implements Parsable
 	{
 		return wordMap;
 	}
-
 }
