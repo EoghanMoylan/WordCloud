@@ -7,10 +7,17 @@ public class StopwordsList extends StopWordsSuper
 {
 	private HashSet<String> stopWordsSet;
 	
-	StopwordsList(String filename) throws Exception
+	public StopwordsList(String filename) throws Exception
 	{
 		stopWordsSet = new HashSet<String>();
-		parse(filename);
+		try
+		{
+			parse(filename);
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		}
 	}
 	public void parse(String filename) throws Exception 
 	{

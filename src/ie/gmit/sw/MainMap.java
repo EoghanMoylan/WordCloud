@@ -11,18 +11,24 @@ public class MainMap
 	public MainMap(String filename, StopwordsList sl, boolean isfile) throws Exception
 	{
 		fileOrUrl = filename;
-		
-		if(isfile)
+		try
 		{
-			toParse = new FileParser(sl);
-			System.out.println("Main file parsed...");
+			if(isfile)
+			{
+				toParse = new FileParser(sl);
+				System.out.println("Main file parsed...");
+			}
+			else
+			{
+				toParse = new UrlParser(sl);
+				System.out.println("URL parsed...");
+			}
+			createMap();
 		}
-		else
+		catch(Exception e)
 		{
-			toParse = new UrlParser(sl);
-			System.out.println("URL parsed...");
+			System.out.println(e);
 		}
-		createMap();
 	}
 	public void createMap() throws Exception
 	{
