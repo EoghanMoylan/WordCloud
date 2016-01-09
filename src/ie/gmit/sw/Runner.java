@@ -7,6 +7,8 @@ public class Runner
 	private static String stopwords;
 	public static void main(String[] args) throws Exception 
 	{
+		//take input from command line when running jar file
+		//so as not to create dependencies
 		fileToParse = args[0];
 		stopwords = args[1];
 		
@@ -18,6 +20,7 @@ public class Runner
 		{
 			isFile = true;
 		}
+		//create image generator, stopwords list and the main map
 		ImageGenerator img;
 		StopwordsList stopWords = new StopwordsList(stopwords);
 		MainMap map = new MainMap(fileToParse, stopWords,isFile);

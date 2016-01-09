@@ -36,39 +36,37 @@ public class ImageGenerator
 		BufferedImage image = new BufferedImage(1920, 1080, BufferedImage.TYPE_4BYTE_ABGR);
 		graphics = (Graphics2D)image.getGraphics();
 		i = 0;
-		
+		//runs through each word in the set add draws it
 		for(String word : map.keySet())
-		{  			
-			if(direction == 3)
-			{
-				direction = 0;
-			}
-			else
-			{
-				direction++;
-			}
+		{  	
+			//determines what direction the word will be moved
+			changeDirection();
+			
 			if(map.get(word) <= 1 == false)
 			{
-				
+				//sets up words colour, size and font
 				fontHandler.setSize(map.get(word) + 15);
 				fontHandler.setFont();
 				fontHandler.setColour();
-	
+				//draws word
 				drawWord(fontHandler.getFont(), fontHandler.getColour(),word, direction);
 			}
 			if(i == maxWords)
 			{
+				//exits for loop if max amount of words is hit
 				break;
 			}
 			i++;
 		}
 		graphics.dispose();
+		//creates the actual image file
 		ImageIO.write(image, "png", new File("image.png"));
 	}
 	private void changeLocation(Rectangle2D r, int direction)
 	{
 		switch(direction)
 		{
+		//alters x and y positions based on direction
 			case 0:
 				if(!(r.getY() < 0))
 					xposition-=3;				
@@ -100,6 +98,7 @@ public class ImageGenerator
 	}
 	private void resetPosition()
 	{
+		//resets word back to initial position
 		xposition = 1920/2;
 		yposition = 1080/2;
 		changeDirection();
@@ -117,6 +116,7 @@ public class ImageGenerator
 	}
 	private Rectangle getBoundaries(Graphics2D g, String word, int x, int y)
 	{
+		//gets boundaries of string so that a rectangle can be placed around it
 		FontRenderContext frc = g.getFontRenderContext();
 		GlyphVector gv = g.getFont().createGlyphVector(frc, word);
 		return gv.getPixelBounds(null, x, y);
@@ -129,14 +129,16 @@ public class ImageGenerator
 		graphics.setColor(color);
 		
 		rect = getBoundaries(graphics, word, xposition, yposition); 
-        	
+        //continues to check if the rectangle is overlapping with another on the list
+		//and will continue to move it until it is not
 		while(rectList.checkOverLap(rect))
 		{
 			changeLocation(rect, direction);
 			rect = getBoundaries(graphics, word, xposition, yposition); 
 		}
-		
+		//adds the rectangle to the list meaning future words won't collide with it
 		rectList.add(rect);
+		//draws the word
 		graphics.drawString(word, xposition, yposition);
 	}
 }

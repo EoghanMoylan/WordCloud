@@ -27,6 +27,9 @@ public class FontHandler
 	}
 	public void setSize(int size)
 	{
+		//sets the size of the font, when the input size
+		//is over a certain size the size is changed to 
+		//avoid words taking up the whole screen
 		if(size>72)
 		{
 			size =72;
@@ -59,13 +62,14 @@ public class FontHandler
 
 	private Color getRandomColor()
 	{		
+		//returns a new colour with a random RGB
 		return new Color((int)(Math.random()*256), (int)(Math.random()*256), (int)(Math.random()*256));
 	}
 	
 	private String randomFont()
 	{
 		Random random = new Random();
-		
+		//returns random font styles
 		switch(random.nextInt(3))
 		{
 		case 0:

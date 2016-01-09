@@ -9,9 +9,11 @@ public class StopwordsList extends StopWordsSuper
 	
 	public StopwordsList(String filename) throws Exception
 	{
+		//create a new hashset of common words which are to be ignored
 		stopWordsSet = new HashSet<String>();
 		try
 		{
+			//attempt to parse the stop words file
 			parse(filename);
 		}
 		catch(Exception e)
@@ -33,6 +35,7 @@ public class StopwordsList extends StopWordsSuper
 			
 			else 
 			{
+				//if word is acceptable, add to set
 				String sWord = sb.toString().toUpperCase();
 				sb = new StringBuffer();	
 				stopWordsSet.add(sWord);
@@ -42,6 +45,7 @@ public class StopwordsList extends StopWordsSuper
 	}
 	public boolean hasWord(String word)
 	{
+		//checks to see if word exists on the set
 		boolean isThere = false;
 		if(stopWordsSet.contains(word))
 		{
